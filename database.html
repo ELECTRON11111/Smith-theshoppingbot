@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootsrap remote css link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>DataBase Page</title>
+</head>
+<style>
+    body{
+        font-family: Tahoma;
+        color: #444;
+        letter-spacing: 1px;
+    }
+
+    h1, h2{
+        font-weight: normal;
+    }
+
+    #wrapper{
+        width: 90%;
+        max-width: 960px;
+        margin: 20px auto;
+        border-radius: 6px;
+        box-shadow: 0px 1px 6px rgba(0,0,0,0.2);
+        box-sizing: border-box;
+        padding: 0 0 20px;
+        overflow: hidden;
+        border: 1px solid lightgray;
+    }
+
+    #page-banner{
+        background: #eee ;
+        padding: 10px 0;
+
+    }
+
+    #page-banner h1, #page-banner p{
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    #page-banner input{
+        width: 90%;
+        max-width: 300px;
+        margin: 20px auto;
+        display: block;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        color: #444;
+    }
+
+    /* #search-books input:hover{
+        border: 2px solid yellow;
+    } */
+
+    #goods-price-list, #add-good, #tabbed-content{
+        margin: 30px;
+    }
+
+    #goods-price-list ul, #tabbed-content ul{
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #goods-price-list li{
+        padding: 20px;
+        border-left: 5px solid #ddd;
+        margin: 20px 10px;
+    }
+
+    #goods-price-list li:hover{
+        border-color: greenyellow;
+    }
+
+    .price{
+        float: right;
+        background: greenyellow;
+        padding: 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .price:hover{
+        background:#eee;
+    }
+
+    #add-good{
+        width: 400px;
+        margin: 0 auto;
+    }
+
+    #add-good input{
+        display: block;
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        border-radius: 4px 0 0 4px;
+        box-sizing: border-box;
+        width: 300px;
+        float: left;
+    }
+
+    #add-good button, button{
+        border: 1px solid #9361bf;
+        background: greenyellow;
+        padding: 10px 20px;
+        font-size: 16px;
+        display: inline-block;
+        margin: 0;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+        width: 100px;
+        /* float: left; */
+        margin: 20px 0;
+        border-left: 0;
+        color: white;
+    }
+
+    #add-good:after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    #add-good #hide{
+        width: 30px;
+    }
+    #add-good label {
+        line-height: 52px;
+    }
+
+    #tabbed-content li{
+        display: inline-block;
+        padding: 10px 14px;
+        background: #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    #tabbed-content .panel{
+        display: none;
+        border: 1px solid #ddd;
+        padding: 0 10px;
+        border-radius: 4px;
+    }
+
+    #tabbed-content .panel.active{
+        display: block;
+    }
+</style>
+
+<body>
+    <!-- Navigation BAr -->
+    <nav class="navbar navbar-expand navbar-dark bg-success">
+        <a class="navbar-brand" href="#">Smith</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="database.html">Data House</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bot.html">Bot</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <div id='wrapper' class="wrapper">
+        <header>
+            <div id="page-banner">
+                <h1 class="title">Data House</h1>
+                <p>Add all goods in inventory!</p>
+                <!--<a href="perfcreg.com" class="link">PerfCreg.com</a>-->
+                <form id="add-good">
+                    <input type="text" placeholder="Enter name of Good" id="product"/>
+                    <button id="remove-all">Format</button>
+                </form>
+                <form id="add-good">
+                    <input type="number" id="price" name="Price" placeholder="Enter Price of Good"/>
+                    <button id="save-product-btn">Save</button>
+                </form>
+            </div>
+        </header>
+        <h2 class="title" style="margin-left: 40px;margin-top: 10px;">Goods Stored ...</h2>
+        <div id="goods-price-list">
+            
+            <ul>
+                <!-- Layout of goods : Each good is a List item -->
+                <!--<li>
+                    <span class="name"></span>
+                    <span class="price"></span>
+                </li>
+                -->
+            </ul>
+        </div>
+        <div class="check-box" style="padding-left: 35px;">
+            <input type="checkbox" id="hide" />
+            <label for="hide">Hide all Goods</label>
+        </div>
+
+    </div>
+
+<!-- Bootsrap JS scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- Test  -->
+<script src="testData.json"></script>
+<!-- My Custom SCript  -->
+<script>
+    
+    let products = [];
+    let productNames = [];
+    let productPrices = [];
+    //Product's props
+    class Product {
+        constructor(productName,productPrice){
+            this.productName = productName;
+            this.productPrice = productPrice;
+        }
+    }
+    
+    //Remove all Goods
+    let removeAllBtn = document.querySelector('#remove-all');
+    removeAllBtn.addEventListener('click', function(e){
+        //Empty the local Storage
+        localStorage.clear();
+        //Clear the console
+        console.clear();
+        //Remove all elem from Page
+        
+        console.log('here')
+        let elems = document.querySelectorAll('ul li span');
+        console.log(elems)
+        Array.from(elems).forEach((elem) => {
+            console.log(elem)
+            let pElem = elem.parentElement
+            pElem.remove();
+            elem.remove();
+        })
+    })
+    //save products/goods and display it
+    const saveBtn = document.querySelector('#save-product-btn');
+    if (typeof localStorage.getItem('json') === "string"){
+        let values = localStorage.getItem('json');
+        let goods = JSON.parse(values);
+        products = goods;
+        for (const value of goods){
+            console.log(value)
+            createElem(value.productName,value.productPrice)
+        }
+        saveBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            //Get existing data string form
+            let existDS = localStorage.getItem('json');
+            let existD = JSON.parse(existDS);
+            console.log(existDS)
+            console.log(existD)
+            
+            //Change the Product's empty array to the existing data array
+            products = existD ;
+            console.log(products)
+            
+            //productName and ProductPrice declaration
+            const pn = document.getElementById('product');
+            // Convert the text to lower case
+            const productName = pn.value.toLowerCase();
+            // Floor all numbers given as inputs
+            const productPrice = parseInt(document.querySelector('#price').value);
+            
+            //Create Good .....
+            const good = new Product(productName,productPrice);
+            console.log(good);
+            products.push(good);
+            createElem(productName,productPrice);
+            console.log(products)
+            
+            //Save new data to Local storage
+            storeData();
+            
+            //clear inputs using IIFE(Immediately Invoked Function Expressions).
+            (function(){
+                let pp = document.querySelector('#price');
+                pn.value = '';
+                pp.value = '';
+            })();
+        });
+    } else {
+        //console.log('Something went wrong!')
+        /*NOTE:
+            External json files require http or https(i.e it requires a server) before it fetches
+        But if a local host (local server. middle person) is created , it fetches the data.
+            So to create a local host , go to your terminal , change the directory to the folder
+        of the file you're working with , using:
+            cd "file location"
+        then click Enter ..... 
+            Now type the following in the tetrminal .....
+                python -m http.server
+            Click enter......
+        Now go to the browser and type
+            localhost:8000/name of file 
+
+        By Following the above steps a local host would be succesfully created...
+
+        
+        Now to get data from the external Json file , you type the following in your Js file.....
+
+            fetch('testData.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
+        
+        This will print the data from the json file in the Console.
+        */
+        //Event Listener
+        
+        saveBtn.addEventListener('click',function(e){
+            
+            //productName and ProductPrice declaration
+            const pn = document.getElementById('product');
+            // Convert the input text to Lower Case
+            const productName = pn.value.toLowerCase();
+            // Make productPrice a Pure Integar(Floor it in case of a float)
+            const productPrice = parseInt(document.querySelector('#price').value);
+
+            e.preventDefault();  
+            const good = new Product(productName,productPrice);
+            console.log(good);
+            products.push(good);
+            createElem(productName,productPrice);
+            console.log(products)
+
+            //save Data to Local Storage 
+            /*To be able to use data given here , we can save the data in a local
+            Storage so that we can be able to access that data on the bot page
+            ....If you need more information on this , check the location below:
+            *C:\JAVASCRIPT by Mr Femi\Demo page data sharing
+            */
+            storeData();
+            
+            //clear inputs using IIFE
+            (function(){
+                let pp = document.querySelector('#price');
+                pn.value = '';
+                pp.value = '';
+            })();
+        });
+        
+    }
+    //Functions 
+    function deleteElem(name){
+        // Delete product from database
+        products.forEach((product) => {
+            //console.log(product);
+            if(product.productName == name){
+                console.log(name);
+                /* products.shift(product);*/
+                console.log(product);
+                // products.pop(product);
+                
+                // we can remove an element from an array by 
+                // getting the index of that element then splice the 
+                // element from the array by using the splice method which
+                // takes two parameters which are 'starting index' and 'no of items to delete'
+                // for the products array the index of the product in consideration 
+                // will be used as the 'starting index' while the 2nd parameter will be 1
+                //representing just 1 item to be deleted!
+                
+                let i = products.indexOf(product);
+                console.log(i);
+                // Delete 1 item from the indexPoint of the product
+                products.splice(i,1);
+            }
+            storeData();
+        });
+
+        // Update DOM
+        //Remove from products list
+        const list = document.querySelector('#goods-price-list ul');
+        console.log(list);
+        //delete goods
+        list.addEventListener('click',function(e){
+            if(e.target.className == 'price'){
+                const li = e.target.parentElement;
+                list.removeChild(e.target.parentElement);
+            }
+        });
+    }
+
+    function createElem(name,price){
+        //Create Elements and display them on the screen      
+        //create Elements
+        
+        const list = document.querySelector('#goods-price-list ul');
+        const li = document.createElement('li');
+        const goodName = document.createElement('span');
+        const goodPrice = document.createElement('span');
+
+        //add content
+        goodName.textContent = name;
+        goodPrice.textContent = price;
+        
+        //add Class
+        goodName.classList = 'name';
+        goodPrice.classList = 'price';
+        
+        //append Elements to DOM(Document Object Model)
+        li.appendChild(goodName);
+        li.appendChild(goodPrice);
+        list.appendChild(li);
+
+        // Function of delete
+        goodPrice.addEventListener('click',(e) => {
+            e.preventDefault();
+            let name = e.target.previousElementSibling.textContent;
+            deleteElem(name);
+        });
+    }
+
+    function storeData(){
+        /*
+            NOTE:
+            //For Storing Data JSON style
+
+            *For a variable in a JSON file , it must be double-quoted ""
+            *With JSON , we stringify the products array i.e we turn the array into a string and put in a variable..
+            In the format '[{"productName":"milo","productPrice":50},{"productName":"peak","productPrice":60}]'
+            *We store the variable containing the string with localStorage
+             
+            //For retrieving our original Products Array back
+
+            *Get the item you stored in the local storage back and save it in a new variable
+            *Create a new variable and in that variable , call the JSON object to parse the
+            previous variable ...... That data is your initial products array Data        
+        
+        */
+        let json = JSON.stringify(products);
+        
+        //products = json;
+        
+        console.log(json)
+        localStorage.setItem('json',json)
+        
+        //Retrieving Data
+        /*let text = localStorage.getItem('json')
+        let data = JSON.parse(text)
+        console.log(data);
+        for(const product of data){
+            console.log(product.productName,product.productPrice);
+        }*/
+    }
+    let btns = Array.from(document.querySelectorAll('span.price'));
+    Array.from(btns).forEach((btn) => {
+        console.log(btn)
+        btn.addEventListener('click',function(e){
+            e.preventDefault()
+            btn.addEventListener('click',(e) => {
+                if (e.target.className == 'price'){
+                    const buttonToRemove = e.target.parentElement.parentElement;
+                    console.log(e.target);
+                    buttonToRemove.removeChild(e.target.parentElement);
+                    console.log(buttonToRemove);
+                    
+                    //Remove from products list
+                    let name = e.target.previousElementSibling.textContent;
+                    products.forEach((product) => {
+                        
+                        //console.log(product);
+                        if(product.productName == name){
+                            console.log(name);
+                            /* products.shift(product);*/
+                            console.log(product);
+                            // products.pop(product);
+                            
+                            // we can remove an element from an array by 
+                            // getting the index of that element then splice the 
+                            // element from the array by using the splice method which
+                            // takes two parameters which are 'starting index' and 'no of items to delete'
+                            // for the products array the index of the product in consideration 
+                            // will be used as the 'starting index' while the 2nd parameter will be 1
+                            //representing just 1 item to be deleted!
+                            
+                            let i = products.indexOf(product);
+                            console.log(i);
+                            // Delete 1 item from the indexPoint of the product
+                            products.splice(i,1);
+
+                        }else {
+                            console.log('Good ain\'t in database.')
+                        }
+                    });
+                    // storeData();
+                }
+            });
+            
+            const list = document.querySelector('#goods-price-list ul');
+            //delete goods
+            list.addEventListener('click',function(e){
+                if(e.target.className == 'price'){
+                    const li = e.target.parentElement;
+                    list.removeChild(li);//list rep. li.parentNode
+                }
+            })   
+
+        })
+    });
+
+     // hide Goods
+    const hideTask = document.querySelector('#hide');
+    const list = document.querySelector('#goods-price-list ul');
+    hideTask.addEventListener('change',function(e){
+        if (hideTask.checked) {
+            list.style.display = 'none';
+        } else {
+            list.style.display = 'initial';
+        }
+    });
+    
+</script>
+</body>
+</html>

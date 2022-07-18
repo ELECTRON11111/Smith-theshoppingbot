@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS remote files -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>The Shopping Bot!</title>
+</head>
+<style>
+    body{
+        font-family: Tahoma;
+        color: #444;
+        letter-spacing: 1px;
+    }
+
+    h1, h2{
+        font-weight: normal;
+    }
+
+    #wrapper{
+        width: 90%;
+        max-width: 960px;
+        margin: 20px auto;
+        border-radius: 6px;
+        box-shadow: 0px 1px 6px rgba(0,0,0,0.2);
+        box-sizing: border-box;
+        padding: 0 0 20px;
+        overflow: hidden;
+        border: 1px solid lightgray;
+    }
+
+    #page-banner{
+        background: #eee ;
+        padding: 10px 0;
+
+    }
+
+    #page-banner h1, #page-banner p{
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    #page-banner input{
+        width: 90%;
+        max-width: 300px;
+        margin: 20px auto;
+        display: block;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        color: #444;
+    }
+
+    /* #search-books input:hover{
+        border: 2px solid yellow;
+    } */
+
+    #goods-price-list, #add-good, #tabbed-content{
+        margin: 30px;
+    }
+
+    #goods-price-list ul, #tabbed-content ul{
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #goods-price-list li{
+        padding: 20px;
+        border-left: 5px solid #ddd;
+        margin: 20px 10px;
+    }
+
+    #goods-price-list li:hover{
+        border-color: greenyellow;
+    }
+
+    .price{
+        float: right;
+        background: greenyellow;
+        padding: 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .price:hover{
+        background:#eee;
+    }
+
+    #add-good{
+        width: 400px;
+        margin: 0 auto;
+    }
+
+    #add-good input{
+        display: block;
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        border-radius: 4px 0 0 4px;
+        box-sizing: border-box;
+        width: 300px;
+        float: left;
+    }
+
+    #add-good button, button{
+        border: 1px solid #9361bf;
+        background: greenyellow;
+        padding: 10px 20px;
+        font-size: 16px;
+        display: inline-block;
+        margin: 0;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+        width: 100px;
+        /* float: left; */
+        margin: 20px 0;
+        border-left: 0;
+        color: white;
+    }
+
+    #add-good:after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    #add-good #hide{
+        width: 30px;
+    }
+    #add-good label {
+        line-height: 52px;
+    }
+    .btn-success {
+        background-color: greenyellow;
+    }
+</style>
+<body>
+    <!-- Navigation BAr -->
+    <nav class="navbar navbar-expand navbar-dark bg-success">
+        <a class="navbar-brand" href="#">Smith</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="database.html">Data House</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="bot.html">Bot</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="receipt.html">Reciept</a>
+              </li>
+          </ul>
+        </div>
+    </nav>
+    <!-- <div class="navigations">
+        <ul>
+            <li><a href="index.html" id="activeThree">Home</a></li>
+            <li><a href="database.html" id="actveTwo">DataBase</a></li>
+            <li><a href="bot.html" id='activeOne'>Go to bot!</a></li>
+            <li><a href="receipt.html">Get receipt!</a></li>
+        </ul>
+    </div> -->
+    <div id='wrapper' class="wrapper">
+        <header>
+            <div id="page-banner">
+                <h1 class="title">Bot</h1>
+                <p>Process purchases!</p>
+                <!--<a href="perfcreg.com" class="link">PerfCreg.com</a>-->
+                <form id="add-good">
+                    <input type="text" placeholder="Enter name of Good" id="good"/>
+                    <!-- <button id="remove-all">Format</button> -->
+                    <button id="save-product-btn" disabled="true">Input</button>
+                </form>
+                <form id="add-good">
+                    <input type="number" id="quantity" name="Quantity" placeholder="Enter quantity"/>
+                    <button id="save-product-btn" disabled="true">Input</button>
+                </form>
+                <form action="" id="add-good">
+                    <a class="btn btn-success btn-lg" href="database.html" role="button" id="continuePicking">Add to Cart</a>
+                    <a class="btn btn-success btn-lg" href="bot.html" role="button" id="change">Calculate Change</a>
+                </form>
+            </div>
+        </header>
+        <h2 class="title" style="margin-left: 40px;margin-top: 10px;">Start Shopping!...</h2>
+        <div id="goods-price-list">
+            
+            <ul>
+                <!-- Layout of goods : Each good is a List item -->
+                <!--<li>
+                    <span class="name"></span>
+                    <span class="price"></span>
+                </li>
+                -->
+            </ul>
+        </div>
+        <div class="check-box" style="padding-left: 35px;">
+            <input type="checkbox" id="hide" />
+            <label for="hide">Hide all Goods</label>
+        </div>
+
+    </div>
+
+    <!-- <h1>Start Shopping!..</h1>
+    <form>
+        <label for="good">Name of good:</label>
+        <input type="text" id='good' placeholder="What Good was purchased?">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id='quantity' placeholder="What quantity was bought?">
+        <label for="amount">Amount Paid:</label>
+        <input type="number" id='amount' placeholder="what amount was paid?">
+        <div class="btns">
+            <button id="continuePicking">Continue Picking >></button>
+            <button id="change">Calculate Change >></button>
+        </div>
+    </form>
+    <div id="goods-price-list">
+        <ul>
+            <li>
+                <span class="name"></span>
+                <span class="price"></span>
+            </li>
+        </ul>
+    </div> -->
+    <!-- Remote Bootstrap JS scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+<script>
+    /*
+    ===================================================================================
+        MINOR PARTS
+    ___________________________________________________________________________________
+    */
+
+    // Global Variables and Object Classes 
+    class Good {
+        constructor(name,price,quantity){
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        }
+    }
+    let cart = [];
+    let products;
+    
+    //Retrieve Data from Database
+    let stringData = localStorage.getItem('json');
+    let data = JSON.parse(stringData);
+    console.log(data);
+    for (const value of data){
+        console.log(value);
+    }
+    products = data;
+    console.log(products);
+
+    /*
+    ====================================================================================
+        EVENT LISTENERS
+    ____________________________________________________________________________________
+    */
+    // Continue picking should keep the product data for good being bought
+    
+    let cp = document.querySelector('#continuePicking');
+    // Continue Picking Button Event Listener
+    cp.addEventListener('click', function(e){
+        e.preventDefault();
+
+        // Variables
+        let name = document.querySelector('#good').value;
+        let quantityDom = document.querySelector('#quantity').value;
+        let quantity = parseInt(quantityDom);
+        let goodLabel = document.getElementsByTagName('label');
+        console.log(name,quantity);
+
+        //Iterate through the products and confirm input 
+        Array.from(products).forEach((product) => {
+            if(product.productName == name){
+                
+                // Create Good
+                const good = new Good(product.productName,product.productPrice,quantity);
+                console.log(good)
+                cart.push(good);
+                createElem(product.productName,quantity);
+                
+                // Empty the inputs
+                (function(){
+                    document.querySelector('#good').value = '';
+                    document.querySelector('#quantity').value = '';
+                })();
+            } else {
+            
+                //Alert the Cashier 
+                alert(`${name} is not in database.`);
+
+                //Clear the inputs
+                emptyInputs();
+                
+                console.log(`${product.productName} is not in database.`);
+            }
+        });
+        let cartData = JSON.stringify(cart);
+        localStorage.setItem('cart',cartData);
+        console.log(cart,cartData);
+    });
+
+    // Calculate Change Button 
+    let cc = document.querySelector('#change');
+    // Calculate Change Button Event Listener
+    cc.addEventListener('click', function (e){
+        // Prevent Default action of 'Refresh'
+        e.preventDefault();
+        if (cart.length != 0){
+            // Global Variables in This scope
+            let totalPrice = 0;
+            
+            // Loop through Products
+            for (const good of cart){
+                console.log(good);
+                // Local Variables declaration.
+                let goodPrice = parseInt(good.price);
+                let quantity = parseInt(good.quantity);
+                let price = goodPrice * quantity;
+
+                // Add The price here to the total Price
+                totalPrice += price;
+            }
+            
+            alert(`#${totalPrice} is the price of goods bought.`);
+            // Save totalPrice in the localStorage
+            localStorage.setItem('totalPrice',totalPrice);
+            let amtPaid = parseInt(prompt('How much was paid by the customer?'));
+            //Save amtPaid in LocalStorage
+            localStorage.setItem('amtPaid',amtPaid);
+            // Calculate Change using the Calculate Change Function
+            calculateChange(amtPaid,totalPrice);
+            // console.log(totalPrice);
+        } else {
+            alert('Fill in your cart first.');
+        }
+    });
+
+    /*
+    ======================================================================================
+        FUNCTIONS
+    ______________________________________________________________________________________    
+    */
+
+    // Function to calculate change which takes two parameters of amtPaid and totalPrice
+    function calculateChange(amtPaid,totalPrice){
+        let change = null;
+        if (totalPrice === amtPaid){
+            alert('You do not have any change , thank you for your patrionage.');
+        } else if (totalPrice > amtPaid ){
+            // Calculate the amount needed to complete purchase
+            change = totalPrice-amtPaid;
+            // Save the change to the LocalStorage
+            alert(`You need #${change} more to complete your purchase.`);
+            // This will give -ve value so it can be identified as debt in the reciept
+            let debt = amtPaid-totalPrice;
+            localStorage.setItem('change',debt);
+            
+        } else if (amtPaid > totalPrice){
+            change = amtPaid-totalPrice;
+            // Save the change to the LocalStorage
+            localStorage.setItem('change',change);
+            alert(`Your change is #${change}, thank you for patrionizing us!`);
+        } else {
+            alert('Something went wrong');
+            console.log('something went wrong!');
+        }
+    }
+
+    // This function clears the inputs bar by removing the text in them 
+    function emptyInputs(){
+        document.querySelector('#good').value = '';
+        document.querySelector('#quantity').value = '';        
+    }
+
+    // This function create DOM list elements with data of good name and quantity both as parameters.
+    function createElem(name,quantity){
+        //Create Elements and display them on the screen      
+        //create Elements
+        
+        const list = document.querySelector('#goods-price-list ul');
+        const li = document.createElement('li');
+        const goodName = document.createElement('span');
+        const goodPrice = document.createElement('span');
+
+        //add content
+        goodName.textContent = name;
+        goodPrice.textContent = quantity;
+        
+        //add Class
+        goodName.classList = 'name';
+        goodPrice.classList = 'price';
+        
+        //append Elements to DOM(Document Object Model)
+        li.appendChild(goodName);
+        li.appendChild(goodPrice);
+        list.appendChild(li);
+    }
+
+</script>
+<!--
+<script>
+    //Declaration of variables
+    class Good {
+        constructor(name,price){
+            this.name = name;
+            this.price = price;
+        } 
+    }
+    let good1 = new Good('milo',200)
+    let good2 = new Good('peak',60)
+    let good3 = null;
+    let good4 = null;
+    let good5 = null;
+    let good6 = null;
+    let good7 = null;
+    let good8 = null;
+    let good9 = null;
+    let good10 = null;
+    let goods = [good1 , good2];
+    let cart = [];
+    let quantityList = [];
+
+    //Event Listeners
+    //Input validation
+    //Continue Picking
+    document.querySelector('#continuePicking').addEventListener('click', function(e){
+        // console.log('start');
+        e.preventDefault();
+        // console.log('continue')
+        /**an existing list needs to exist
+            *The name of good and quantity of a product needs to be addede to that list each time button is clicked
+            *Each time the button is clicked a DOM has to be created for that product 
+        */
+        let name = document.querySelector('input[type=\'text\']').value;
+        // console.log(name);
+        let quantity = document.querySelector('input[type=\'number\']').value;
+        // console.log(quantity);
+        goods.forEach((good) => {
+            if (good.name === name ){
+                console.log('Good found in database!');
+                cart.push(name);
+                quantityList.push(quantity);
+                // console.log(products);
+                // console.log(quantityList);
+                addGoodToDom(name,quantity)
+            }
+        })
+    })
+
+    //Calculate Change 
+    document.querySelector('#change').addEventListener('click', (e) => {
+        e.preventDefault()
+        let productName = document.querySelector('input[type=\'text\']').value;
+        let quantity = document.querySelector('input[type=\'number\']').value;
+        for(const good of goods){
+            if (good.name === productName){
+                let price = parseInt(quantity*good.price);
+                console.log('Good was found in data-base!')
+                calculateChange(price)
+            }
+        } 
+    })
+
+    //Functions
+    function addGoodToDom(name,quantity){
+        //create Elements
+        const list = document.querySelector('#goods-price-list ul');
+        const li = document.createElement('li');
+        const goodname = document.createElement('span');
+        const goodprice = document.createElement('span');
+        //add content
+        goodname.textContent = name;
+        goodprice.textContent = quantity;
+        //add Class
+        goodname.classList = 'name';
+        goodprice.classList = 'price';
+        //append Elements to DOM(Document Object Model)
+        li.appendChild(goodname);
+        li.appendChild(goodprice);
+        list.appendChild(li);
+        //end of create Elements
+    }
+
+    function calculateChange(price){
+        let amtPaid = parseInt(prompt('What amount is brought by the customer?'));
+        let change = null;
+        if (price < amtPaid){
+            change = amtPaid - price ;
+            alert(`You\'re change is ${change}`)
+        } else if (amtPaid < price){
+            alert(`Money is incomplete.#${price-amtPaid} more needed to complete purchase`)
+        } else {
+            alert('Something went wrong .... try again!')
+        }
+    }
+
+    //Form Validation
+    function validate(){
+        let elem = document.querySelector('input[type=\'text\']');
+        let productName = elem.value;
+        for(const good of goods){
+            if (good.name === productName){
+                elem = document.querySelector('input[type=\'text\']');
+                elem.style.backgroundColor = 'red'
+            } else {
+                continue
+            }
+        }
+    }
+</script> -->
+
+
+<!--<script>
+    //Objects of goods and prices
+    const stocks = {
+        stock1:{stockName:'pizza',stockPrice:parseInt('1000')},
+        stock2:{stockName:'danomilk',stockPrice:parseInt('50')},
+        stock3:{stockName:'potatochips',stockPrice:parseInt('50')},
+        stock4:{stockName:'plantainchips',stockPrice:parseInt('50')},
+        stock5:{stockName:'baron',stockPrice:parseInt('1500')},
+        stock6:{stockName:'fruitwine',stockPrice:parseInt('1200')},
+        stock7:{stockName:'trophy',stockPrice:parseInt('400')},
+        stock8:{stockName:'pepsi',stockPrice:parseInt('100')},
+        stock9:{stockName:'monster',stockPrice:parseInt('600')},
+        stock10:{stockName:'cocacola',stockPrice:parseInt('100')},
+        stock11:{stockName:'icecream',stockPrice:parseInt('300')},
+        stock12:{stockName:'peak',stockPrice:parseInt('100')},
+        stock13:{stockName:'malt',stockPrice:parseInt('250')},
+        stock14:{stockName:'cornflakes',stockPrice:parseInt('750')},
+        stock15:{stockName:'goldenmorn',stockPrice:parseInt('550')},
+        stock16:{stockName:'lipton',stockPrice:parseInt('40')},
+        stock17:{stockName:'coaster',stockPrice:parseInt('10')},//stocks.forEach((stock)=>{if(stock.stockName==something){do this}})
+        stock18:{stockName:'fanta',stockPrice:parseInt('100')},
+        stock19:{stockName:'festo',stockPrice:parseInt('70')},
+        stock20:{stockName:'cupcake',stockPrice:parseInt('200')}
+    };
+
+    /*
+*cpicking means continue picking which represents the continue picking 
+button.................................................................
+*/
+const cpicking = document.getElementById('continuePicking');
+    cpicking.addEventListener('click',function(e){
+        e.preventDefault();
+        const stockNames = [
+            stocks.stock1.stockName,
+            stocks.stock2.stockName,
+            stocks.stock3.stockName,
+            stocks.stock4.stockName,
+            stocks.stock5.stockName,
+            stocks.stock6.stockName,
+            stocks.stock7.stockName,
+            stocks.stock8.stockName,
+            stocks.stock9.stockName,
+            stocks.stock10.stockName,
+            stocks.stock11.stockName,
+            stocks.stock12.stockName,
+            stocks.stock13.stockName,
+            stocks.stock14.stockName,
+            stocks.stock15.stockName,
+            stocks.stock16.stockName,
+            stocks.stock17.stockName,
+            stocks.stock18.stockName,
+            stocks.stock19.stockName,
+            stocks.stock20.stockName
+        ];
+        const stockPrices = [
+          stocks.stock1.stockPrice,
+          stocks.stock2.stockPrice,
+          stocks.stock3.stockPrice,
+          stocks.stock4.stockPrice,
+          stocks.stock5.stockPrice,
+          stocks.stock6.stockPrice,
+          stocks.stock7.stockPrice,
+          stocks.stock8.stockPrice,
+          stocks.stock9.stockPrice,
+          stocks.stock10.stockPrice,
+          stocks.stock11.stockPrice,
+          stocks.stock12.stockPrice,
+          stocks.stock13.stockPrice,
+          stocks.stock14.stockPrice,
+          stocks.stock15.stockPrice,
+          stocks.stock16.stockPrice,
+          stocks.stock17.stockPrice,
+          stocks.stock18.stockPrice,
+          stocks.stock19.stockPrice,
+          stocks.stock20.stockPrice
+        ];
+        //nameOfGood is the first input value
+        //quantity is the second input value       
+        const nameOfGood = document.getElementById('good').value;
+        const quantity = document.getElementById('quantity').value;
+        stockNames.forEach(function(stockName){
+            if(stockName == nameOfGood){
+                //get the index of the stockName
+                const index = stockNames.indexOf(stockName);
+                const priceOfGood = stockPrices[index];
+                //price and total
+                const priceOne = quantity*priceOfGood;
+                localStorage.setItem('priceOne',priceOne);
+                console.log(priceOne);
+            }else if(stockName != nameOfGood){
+                //do nothing
+            }else{
+                alert(`${nameOfGood} is not in our database!`);
+            }
+        })
+        //create Elements
+        const list = document.querySelector('#goods-price-list ul');
+        const li = document.createElement('li');
+        const goodname = document.createElement('span');
+        const goodprice = document.createElement('span');
+        //add content
+        goodname.textContent = nameOfGood;
+        goodprice.textContent = quantity;
+        //add Class
+        goodname.classList = 'name';
+        goodprice.classList = 'price';
+        //append Elements to DOM(Document Object Model)
+        li.appendChild(goodname);
+        li.appendChild(goodprice);
+        list.appendChild(li);
+        //end of create Elements
+    });
+
+    //calculate Change btn
+    const changeBtn = document.querySelector('#change');
+    changeBtn.addEventListener('click',function(e){
+        e.preventDefault();
+        if(localStorage.getItem('productName') == ""){
+            const stockNames = [
+                stocks.stock1.stockName,
+                stocks.stock2.stockName,
+                stocks.stock3.stockName,
+                stocks.stock4.stockName,
+                stocks.stock5.stockName,
+                stocks.stock6.stockName,
+                stocks.stock7.stockName,
+                stocks.stock8.stockName,
+                stocks.stock9.stockName,
+                stocks.stock10.stockName,
+                stocks.stock11.stockName,
+                stocks.stock12.stockName,
+                stocks.stock13.stockName,
+                stocks.stock14.stockName,
+                stocks.stock15.stockName,
+                stocks.stock16.stockName,
+                stocks.stock17.stockName,
+                stocks.stock18.stockName,
+                stocks.stock19.stockName,
+                stocks.stock20.stockName
+            ];
+            const stockPrices = [
+            stocks.stock1.stockPrice,
+            stocks.stock2.stockPrice,
+            stocks.stock3.stockPrice,
+            stocks.stock4.stockPrice,
+            stocks.stock5.stockPrice,
+            stocks.stock6.stockPrice,
+            stocks.stock7.stockPrice,
+            stocks.stock8.stockPrice,
+            stocks.stock9.stockPrice,
+            stocks.stock10.stockPrice,
+            stocks.stock11.stockPrice,
+            stocks.stock12.stockPrice,
+            stocks.stock13.stockPrice,
+            stocks.stock14.stockPrice,
+            stocks.stock15.stockPrice,
+            stocks.stock16.stockPrice,
+            stocks.stock17.stockPrice,
+            stocks.stock18.stockPrice,
+            stocks.stock19.stockPrice,
+            stocks.stock20.stockPrice
+            ];
+            //nameOfGood is the first input value
+            //quantity is the second input value       
+            const nameOfGood = document.getElementById('good').value;
+            const quantity = document.getElementById('quantity').value;
+            stockNames.forEach(function(stockName){
+                if(stockName == nameOfGood){
+                    //get the index of the stockName
+                    const index = stockNames.indexOf(stockName);
+                    const priceOfGood = stockPrices[index];
+                    //price and total
+                    const priceOne = quantity*priceOfGood;
+                    const amt = parseInt(prompt('What is the amount paid ?'));
+                    if( amt > priceOne){
+                        const change = amt-priceOne;
+                        alert(`Your change is ${change}`);
+                    }else if(priceOne > amt ){
+                        alert(`You need approximately ${priceOne-amt} to complete this purchsase!`);
+                    }else if(priceOne == amt ){
+                        alert(`You have no change left, Thank You for shopping with Me ${localStorage.getItem('userName')}!`)
+                    }
+                    localStorage.setItem('priceOne',priceOne);
+                    console.log(priceOne);
+                }else if(stockName != nameOfGood){
+                    //do nothing
+                }else{
+                    alert(`${nameOfGood} is notin our database!`);
+                }
+            });
+            //create Elements
+            const list = document.querySelector('#goods-price-list ul');
+            const li = document.createElement('li');
+            const goodname = document.createElement('span');
+            const goodprice = document.createElement('span');
+            //add content
+            goodname.textContent = nameOfGood;
+            goodprice.textContent = quantity;
+            //add Class
+            goodname.classList = 'name';
+            goodprice.classList = 'price';
+            //append Elements to DOM(Document Object Model)
+            li.appendChild(goodname);
+            li.appendChild(goodprice);
+            list.appendChild(li);
+            //end of create Elements    
+        }else{
+            const nameOfGood = document.getElementById('good').value;
+            const quantity = document.getElementById('quantity').value;
+            const good = {
+                goodName:localStorage.getItem('productName'),
+                goodPrice:localStorage.getItem('productPrice')
+            }    
+            
+            //Create Elements and display them on the screen      
+            //create Elements
+            const list = document.querySelector('#goods-price-list ul');
+            const li = document.createElement('li');
+            const goodname = document.createElement('span');
+            const goodprice = document.createElement('span');
+            //add content
+            goodname.textContent = nameOfGood;
+            goodprice.textContent = quantity;
+            //add Class
+            goodname.classList = 'name';
+            goodprice.classList = 'price';
+            //append Elements to DOM(Document Object Model)
+            li.appendChild(goodname);
+            li.appendChild(goodprice);
+            list.appendChild(li);
+            //end of create Elements
+
+            if(nameOfGood == good.goodName){
+                let amt = parseInt(prompt('What is the amount paid ?'));
+                let totalPrice = quantity*good.goodPrice;
+                if(totalPrice>amt){
+                    alert(`You need more money , approximately ${totalPrice-amt}`);
+                }else if(amt>totalPrice){
+                    let change = amt-totalPrice
+                    alert(`Your change is ${change}`);
+                }else if(amt == totalPrice){
+                    alert(`You don't have any change , your payment has been made!`);
+                }
+            }
+        }
+    });
+
+    //active effect on navigation
+    
+</script> -->
+</html>

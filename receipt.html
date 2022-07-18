@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS link  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Recipt</title>
+</head>
+<style>
+    /* Styling */
+    .businessName{
+        padding-left: 30px;
+        font-size: xx-large;
+        padding: 5px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .price{
+        display: flex;
+        /* padding: 10px;   */
+        flex-wrap: wrap;
+        /* flex-direction:row; */
+        flex-direction: column;
+        justify-content: space-around;
+        /* float: right; */
+        padding-left: 50vh;
+    }
+    .main-wrapper{
+        border : 2px solid yellowgreen;
+    }
+    .wrapper{
+        /* width: 1000px; */
+        margin: 1px ;
+        position: absolute;
+        top: 10%;
+        left: 20%;
+        /* transform: translate(-50%, -50%); */
+        background-color: #fff;
+        /* display: flex; */
+        justify-content: center;
+        justify-self: center;
+    }
+    .remarks{
+        display: inline;
+    }
+    li.father{
+        width: fit-content;
+        padding: 10px;
+    }
+    li{
+        display: block;
+    }
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .goodsQuantity{
+        width: 70%;
+        border-bottom: 2px black;
+        border-right: 0;
+        border-left: 0;
+        border-top: 2px black ;
+        border-style: dotted;
+    }
+    #phoneNo , address , #invoice , .time{
+        padding: 5px;
+    }
+    .cash{
+        padding: 8px;
+    }
+    .cashPaid {
+        padding-left: 33.5vh;
+    }
+    .total , .change {
+        padding-left: 38vh;
+    }
+    ul>li.lists{
+        padding: 10px;
+    }
+    .remarks{
+        padding: 5px;
+    }
+    .remarksDiv{
+        margin: 5px;
+    }
+    .watermark{
+        margin: 2px;
+        padding-left: 40vh;
+    }
+</style>
+<body>
+    <div class="main-wrapper">
+        <div class="wrapper">
+            <div id="header" class="nameAddress" class="contact">
+                <h1 class="businessName">Gilbalm Pharmacy & Stores</h1>
+                <address class="address">
+                    KM 6 , IDIROKO RD , ESTATE/ONIPANU BUS-STOP,
+                    OTA , OGUN STATE.
+                </address>
+                <div class="contact">
+                    <h3 id="phoneNo">
+                        08034006406 , 08159990621 . 
+                    </h3>
+                </div>
+                <div id="invoice" style="font: 'Lucida Sans Regular';">
+                    Invoice : 85941
+                </div>
+                <div class="time">
+                    <h3 id="time">
+                        05/02/2021  19:31 
+                    </h3>
+                </div>
+            </div>
+            <div class="goodsQuantity">
+                <ul>
+                    <!-- <li class="father">
+                        <span class="quantity">1</span> X  <span class="name">ARENEX PLUS FURT</span>    <span class="price">550</span>
+                    </li>
+                    <li class="father">
+                        <span class="quantity"></span> X  <span class="name">EMCAP PARACETAMOL 50</span>    <span class="price">50</span>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="cash">
+                <ul>
+                    <li class="lists">
+                        <span class="totaltext">Total N         <span class="total">0.00</span></span>
+                    </li>
+                    <li class="lists">
+                        <span class="cashtext">Cash Paid N         <span class="cashPaid">0.00</span></span>
+                    </li>
+                    <li class="lists">
+                        <span class="changetext">Change N</span>         
+                        <span class="change">0.00</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="remarksDiv">
+                <span class="remarks">
+                    THANKS FOR YOUR PATRIONAGE.
+                    GOODS ONCE <br> PURCHASED CAN 
+                    NOT BE RETURNED.
+                </span>
+            </div>
+            <div class="server" style="padding-left: 5px;">
+                Served by : <span id="server">Cashier</span>
+            </div>
+            <div class="watermark">Powered by <span style="font:Verdana ;font-style: italic;color: greenyellow;">Electron!</span></div>
+        </div>
+    </div>
+    <!-- remote JS bootsrap scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+<script>
+    /*
+    ================================================================================
+      Date Data
+    _______________________________________________________________________________
+    */
+
+    // The time Data , please make reference to W3 schools Date Methods for JS. 
+    let time = document.querySelector('#time').textContent;
+    console.log(time);
+    let t = `${new Date().getDate()}/${new Date().getMonth()+1}/${new Date().getFullYear()}  ${new Date().getHours()}:${new Date().getMinutes()}`
+    console.log(t);
+    document.querySelector('#time').textContent = t;
+    
+    // =============================================================================
+    //  Get Username of Person
+    // _____________________________________________________________________________
+    
+    // Get username(i.e the name the index.html) from the localStorage and update the DOM
+    let userName = localStorage.getItem('userName');
+    console.log(userName);
+    let server = document.querySelector('#server').textContent;
+    console.log(server);
+    // server = userName; // You have to call the DOM inorder to update anything.
+    if (userName !== ''){
+        document.querySelector('#server').textContent = userName;
+    }
+
+    /*
+    ==============================================================================
+        Get Total
+    ______________________________________________________________________________
+    */
+
+    //   Get the amt paid from the localStorage and update the DOM with that info. 
+    let totalPrice = localStorage.getItem('totalPrice');
+    // console.log(total);
+    document.querySelector('.total').textContent = totalPrice + '.00';
+
+    /*
+    ==============================================================================
+        Get AmtPaid
+    ______________________________________________________________________________
+    */
+
+    // Get the amt paid from the localStorage and update the DOM with that info. 
+    let amtPaid = localStorage.getItem('amtPaid');
+    document.querySelector('.cashPaid').textContent = amtPaid + '.00';
+
+    /*
+    ==============================================================================
+        Get Change
+    ______________________________________________________________________________
+    */
+
+    // Get the change value from the localStorage and update the DOM with that info. 
+    let change = localStorage.getItem('change');
+    let changeDOM = document.querySelector('.change');
+    if(parseInt(amtPaid) > parseInt(totalPrice)){
+        changeDOM.textContent = change + '.00';
+    } else {
+        // console.log(typeof change)
+        document.querySelector('.changetext').textContent = 
+        'Debt N'
+        // Change the textContent  
+        changeDOM.textContent = change + '.00';
+    }
+
+    /*
+    ==============================================================================
+        Display Goods on the Reciept
+    ______________________________________________________________________________
+    */
+
+    // Get the data of the goods added to the cart in bot.html then parse the data(unstring)
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    console.log(cart);
+    
+    // For each good in the cart , create an element containing the data of that good.
+    cart.forEach((good) => {
+        createElem(good.name,good.price,good.quantity);
+    });
+
+    /*
+    =============================================================================
+        Mini Functions
+    _____________________________________________________________________________
+    */
+
+    // Function to create good element.
+    function createElem(name,price,quantity){
+        // Get the ul element containing the goods
+        let ul = document.querySelector('.goodsQuantity>ul');
+        console.log(ul);
+
+        // Create a li element with className 'father' to house the good's info.
+        let li = document.createElement('li');
+        li.className = 'father';
+        console.log(li);
+
+        // Create a span element with className 'quantity' to house the quantity of that good bought.
+        let spanQuantity = document.createElement('span');
+        spanQuantity.className = 'quantity'
+        spanQuantity.textContent = quantity + ' X ';
+        console.log(spanQuantity);
+
+        // Create a span element with className 'name' to house the name of that good bought.
+        let spanName = document.createElement('span');
+        spanName.className = 'name';
+        spanName.textContent = name.toUpperCase();
+        console.log(spanName);
+
+        // Create a span element with className 'price' to house the price of that good bought.
+        let spanPrice = document.createElement('span');
+        spanPrice.className = 'price';
+        // Quantity x Price
+        spanPrice.textContent = price * quantity;
+        console.log(spanPrice);
+
+        // Put The span elem with className quantity under the li element(i.e father) 
+        li.appendChild(spanQuantity);
+        // Put The span elem with className quantity under the li element(i.e father) 
+        li.appendChild(spanName);
+        // Put The span elem with className quantity under the li element(i.e father) 
+        li.appendChild(spanPrice);
+        // Put the li elem which now has 3 child elements under the ul element that houses all the goods.
+        ul.appendChild(li);
+        console.log(ul);
+    } 
+</script>
+</html>
